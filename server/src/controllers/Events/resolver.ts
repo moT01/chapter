@@ -207,6 +207,7 @@ ${unsubscribe}
       chapter,
       user_roles: [],
       sponsors: [],
+      tags: [],
     }).save();
 
     event.sponsors = await Promise.all(
@@ -241,7 +242,7 @@ ${unsubscribe}
     if (!event) throw new Error('Cant find event');
 
     // TODO: Handle tags
-    event.tags = [];
+    // event.tags = [];
 
     event.invite_only = data.invite_only ?? event.invite_only;
     event.name = data.name ?? event.name;

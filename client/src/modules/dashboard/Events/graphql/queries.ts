@@ -16,10 +16,6 @@ export const EVENTS = gql`
         id
         name
       }
-      tags {
-        id
-        name
-      }
     }
   }
 `;
@@ -39,10 +35,6 @@ export const EVENT = gql`
       ends_at
       image_url
       chapter {
-        id
-        name
-      }
-      tags {
         id
         name
       }
@@ -87,10 +79,6 @@ export const EVENT_WITH_VENU = gql`
       capacity
       start_at
       ends_at
-      tags {
-        id
-        name
-      }
       venue {
         id
       }
@@ -112,10 +100,6 @@ export const createEvent = gql`
       url
       streaming_url
       capacity
-      tags {
-        id
-        name
-      }
     }
   }
 `;
@@ -130,10 +114,6 @@ export const updateEvent = gql`
       url
       streaming_url
       capacity
-      tags {
-        id
-        name
-      }
     }
   }
 `;

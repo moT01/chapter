@@ -6,7 +6,7 @@ import {
   Event,
   EventSponsor,
   Sponsor,
-  Tag,
+  // Tag,
   Venue,
   VenueType,
 } from 'src/models';
@@ -47,6 +47,7 @@ const createEvents = async (
       user_roles: [],
       image_url: image.imageUrl(640, 480, 'nature', true),
       sponsors: [],
+      tags: [],
     });
 
     await event.save();
@@ -59,12 +60,12 @@ const createEvents = async (
         .map((es) => es.save()),
     );
 
-    await Promise.all(
+    /* await Promise.all(
       Array.from(new Array(1 + random(3)), () => {
-        const tag = new Tag({ event, name: lorem.words(1) });
+        const tag = new Tag({ event_id: event.id, name: lorem.words(1) });
         return tag.save();
       }),
-    );
+    );*/
 
     events.push(event);
   }

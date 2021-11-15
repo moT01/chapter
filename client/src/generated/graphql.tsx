@@ -72,6 +72,10 @@ export type CreateEventInputs = {
   venue_type?: Maybe<VenueType>;
 };
 
+export type CreateTagInputs = {
+  name: Scalars['String'];
+};
+
 export type CreateVenueInputs = {
   city: Scalars['String'];
   country: Scalars['String'];
@@ -108,7 +112,6 @@ export type Event = {
   sponsors: Array<EventSponsor>;
   start_at: Scalars['DateTime'];
   streaming_url?: Maybe<Scalars['String']>;
-  tags?: Maybe<Array<Tag>>;
   updated_at: Scalars['DateTime'];
   url?: Maybe<Scalars['String']>;
   user_roles: Array<UserEventRole>;
@@ -143,6 +146,7 @@ export type Mutation = {
   confirmRsvp: Rsvp;
   createChapter: Chapter;
   createEvent: Event;
+  createTag: Tag;
   createVenue: Venue;
   deleteChapter: Scalars['Boolean'];
   deleteEvent: Scalars['Boolean'];
@@ -177,6 +181,10 @@ export type MutationCreateChapterArgs = {
 
 export type MutationCreateEventArgs = {
   data: CreateEventInputs;
+};
+
+export type MutationCreateTagArgs = {
+  data: CreateTagInputs;
 };
 
 export type MutationCreateVenueArgs = {
@@ -248,6 +256,8 @@ export type Query = {
   me?: Maybe<User>;
   paginatedEvents: Array<Event>;
   sponsors: Array<Sponsor>;
+  tag?: Maybe<Tag>;
+  tags: Array<Tag>;
   venue?: Maybe<Venue>;
   venues: Array<Venue>;
 };
@@ -268,6 +278,10 @@ export type QueryEventsArgs = {
 export type QueryPaginatedEventsArgs = {
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
+};
+
+export type QueryTagArgs = {
+  id: Scalars['Int'];
 };
 
 export type QueryVenueArgs = {
@@ -314,7 +328,6 @@ export type Sponsor = {
 export type Tag = {
   __typename?: 'Tag';
   created_at: Scalars['DateTime'];
-  event: Event;
   id: Scalars['Int'];
   name: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -512,10 +525,6 @@ export type ChapterQuery = {
           start_at: any;
           invite_only: boolean;
           canceled: boolean;
-          tags?:
-            | Array<{ __typename?: 'Tag'; id: number; name: string }>
-            | null
-            | undefined;
         }>;
       }
     | null
@@ -607,10 +616,6 @@ export type EventsQuery = {
       | { __typename?: 'Venue'; id: number; name: string }
       | null
       | undefined;
-    tags?:
-      | Array<{ __typename?: 'Tag'; id: number; name: string }>
-      | null
-      | undefined;
   }>;
 };
 
@@ -635,10 +640,6 @@ export type EventQuery = {
         ends_at: any;
         image_url: string;
         chapter: { __typename?: 'Chapter'; id: number; name: string };
-        tags?:
-          | Array<{ __typename?: 'Tag'; id: number; name: string }>
-          | null
-          | undefined;
         sponsors: Array<{
           __typename?: 'EventSponsor';
           sponsor: {
@@ -691,10 +692,6 @@ export type EventVenuesQuery = {
         capacity: number;
         start_at: any;
         ends_at: any;
-        tags?:
-          | Array<{ __typename?: 'Tag'; id: number; name: string }>
-          | null
-          | undefined;
         venue?: { __typename?: 'Venue'; id: number } | null | undefined;
       }
     | null
@@ -717,10 +714,6 @@ export type CreateEventMutation = {
     url?: string | null | undefined;
     streaming_url?: string | null | undefined;
     capacity: number;
-    tags?:
-      | Array<{ __typename?: 'Tag'; id: number; name: string }>
-      | null
-      | undefined;
   };
 };
 
@@ -740,10 +733,6 @@ export type UpdateEventMutation = {
     url?: string | null | undefined;
     streaming_url?: string | null | undefined;
     capacity: number;
-    tags?:
-      | Array<{ __typename?: 'Tag'; id: number; name: string }>
-      | null
-      | undefined;
   };
 };
 
@@ -929,10 +918,6 @@ export type HomeQuery = {
     invite_only: boolean;
     canceled: boolean;
     start_at: any;
-    tags?:
-      | Array<{ __typename?: 'Tag'; id: number; name: string }>
-      | null
-      | undefined;
     chapter: {
       __typename?: 'Chapter';
       id: number;
@@ -1163,10 +1148,6 @@ export const ChapterDocument = gql`
         name
         description
         start_at
-        tags {
-          id
-          name
-        }
         invite_only
         canceled
       }
@@ -1462,10 +1443,6 @@ export const EventsDocument = gql`
         id
         name
       }
-      tags {
-        id
-        name
-      }
     }
   }
 `;
@@ -1524,10 +1501,6 @@ export const EventDocument = gql`
       ends_at
       image_url
       chapter {
-        id
-        name
-      }
-      tags {
         id
         name
       }
@@ -1612,10 +1585,6 @@ export const EventVenuesDocument = gql`
       capacity
       start_at
       ends_at
-      tags {
-        id
-        name
-      }
       venue {
         id
       }
@@ -1685,10 +1654,6 @@ export const CreateEventDocument = gql`
       url
       streaming_url
       capacity
-      tags {
-        id
-        name
-      }
     }
   }
 `;
@@ -1745,10 +1710,6 @@ export const UpdateEventDocument = gql`
       url
       streaming_url
       capacity
-      tags {
-        id
-        name
-      }
     }
   }
 `;
@@ -2438,10 +2399,6 @@ export const HomeDocument = gql`
       invite_only
       canceled
       start_at
-      tags {
-        id
-        name
-      }
       chapter {
         id
         name

@@ -84,7 +84,7 @@ export const EditEventPage: NextPage = () => {
           ...rest,
           sponsors: sponsorData || [],
           venueId: data.event?.venue?.id,
-          tags: data.event.tags || [],
+          tags: [], // data.event.tags || [],
         }}
         loading={loadingUpdate}
         onSubmit={onSubmit}

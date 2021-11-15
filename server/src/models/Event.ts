@@ -82,10 +82,6 @@ export class Event extends BaseModel {
   @OneToMany((_type) => Rsvp, (rsvp) => rsvp.event, { onDelete: 'CASCADE' })
   rsvps!: Rsvp[];
 
-  @Field(() => [Tag], { nullable: true })
-  @OneToMany((_type) => Tag, (tag) => tag.event, { onDelete: 'CASCADE' })
-  tags!: Tag[];
-
   @Field(() => [UserEventRole])
   @OneToMany((_type) => UserEventRole, (UserEventRole) => UserEventRole.event)
   user_roles!: UserEventRole[];
@@ -110,6 +106,7 @@ export class Event extends BaseModel {
     user_roles: UserEventRole[];
     image_url: string;
     sponsors: EventSponsor[];
+    tags: Tag[];
   }) {
     super();
     if (params) {

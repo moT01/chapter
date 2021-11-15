@@ -16,10 +16,6 @@ export const CHAPTER = gql`
         name
         description
         start_at
-        tags {
-          id
-          name
-        }
         invite_only
         canceled
       }

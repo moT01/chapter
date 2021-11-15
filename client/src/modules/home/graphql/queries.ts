@@ -9,10 +9,6 @@ export const HOME_PAGE_QUERY = gql`
       invite_only
       canceled
       start_at
-      tags {
-        id
-        name
-      }
       chapter {
         id
         name
