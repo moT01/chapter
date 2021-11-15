@@ -3,8 +3,8 @@ import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseModel } from './BaseModel';
 import { Chapter } from './Chapter';
 import { EventSponsor } from './EventSponsor';
+import { EventTag } from './EventTag';
 import { Rsvp } from './Rsvp';
-import { Tag } from './Tag';
 import { UserEventRole } from './UserEventRole';
 import { Venue } from './Venue';
 
@@ -68,6 +68,12 @@ export class Event extends BaseModel {
   })
   sponsors: EventSponsor[];
 
+  @Field(() => [EventTag])
+  @OneToMany((_type) => EventTag, (eventTag) => eventTag.event, {
+    onDelete: 'CASCADE',
+  })
+  tags: EventTag[];
+
   @Field(() => Venue, { nullable: true })
   @ManyToOne((_type) => Venue, (venue) => venue.events, { nullable: true })
   @JoinColumn({ name: 'venue_id' })
@@ -106,7 +112,7 @@ export class Event extends BaseModel {
     user_roles: UserEventRole[];
     image_url: string;
     sponsors: EventSponsor[];
-    tags: Tag[];
+    tags: EventTag[];
   }) {
     super();
     if (params) {
@@ -126,6 +132,7 @@ export class Event extends BaseModel {
         user_roles,
         image_url,
         sponsors,
+        tags,
       } = params;
 
       this.name = name;
@@ -143,6 +150,7 @@ export class Event extends BaseModel {
       this.user_roles = user_roles;
       this.image_url = image_url;
       this.sponsors = sponsors;
+      this.tags = tags;
     }
   }
 }

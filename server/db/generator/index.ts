@@ -15,12 +15,12 @@ import setupRoles from './setupRoles';
 
   const [user, users] = await createUsers();
   const sponsors = await createSponsors();
-  await createTags();
+  const tags = await createTags();
 
   const chapters = await createChapters(user);
   const venues = await createVenues();
 
-  const events = await createEvents(chapters, venues, sponsors);
+  const events = await createEvents(chapters, venues, sponsors, tags);
 
   await createRsvps(events, users);
   await setupRoles(user, users, chapters);

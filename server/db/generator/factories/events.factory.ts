@@ -5,8 +5,9 @@ import {
   Chapter,
   Event,
   EventSponsor,
+  EventTag,
   Sponsor,
-  // Tag,
+  Tag,
   Venue,
   VenueType,
 } from 'src/models';
@@ -15,6 +16,7 @@ const createEvents = async (
   chapters: Chapter[],
   venues: Venue[],
   sponsors: Sponsor[],
+  tags: Tag[],
 ): Promise<Event[]> => {
   const events: Event[] = [];
 
@@ -60,7 +62,15 @@ const createEvents = async (
         .map((es) => es.save()),
     );
 
-    /* await Promise.all(
+    await Promise.all(
+      randomItems(tags, 2)
+        .map((tag) => {
+          return new EventTag({ eventId: event.id, tagId: tag.id });
+        })
+        .map((et) => et.save()),
+    );
+
+    /*await Promise.all(
       Array.from(new Array(1 + random(3)), () => {
         const tag = new Tag({ event_id: event.id, name: lorem.words(1) });
         return tag.save();

@@ -112,6 +112,7 @@ export type Event = {
   sponsors: Array<EventSponsor>;
   start_at: Scalars['DateTime'];
   streaming_url?: Maybe<Scalars['String']>;
+  tags: Array<EventTag>;
   updated_at: Scalars['DateTime'];
   url?: Maybe<Scalars['String']>;
   user_roles: Array<UserEventRole>;
@@ -127,6 +128,17 @@ export type EventSponsor = {
   id: Scalars['Int'];
   sponsor: Sponsor;
   sponsor_id: Scalars['Int'];
+  updated_at: Scalars['DateTime'];
+};
+
+export type EventTag = {
+  __typename?: 'EventTag';
+  created_at: Scalars['DateTime'];
+  event: Event;
+  event_id: Scalars['Int'];
+  id: Scalars['Int'];
+  tag: Tag;
+  tag_id: Scalars['Int'];
   updated_at: Scalars['DateTime'];
 };
 
@@ -328,6 +340,7 @@ export type Sponsor = {
 export type Tag = {
   __typename?: 'Tag';
   created_at: Scalars['DateTime'];
+  events: Array<EventTag>;
   id: Scalars['Int'];
   name: Scalars['String'];
   updated_at: Scalars['DateTime'];
